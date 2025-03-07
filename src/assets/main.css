@@ -1,8 +1,11 @@
+/* @import './base.css'; */
+@import "tailwindcss";
+/* 
 :root {
-  --background-body: #24282f;
-  --background-card: #3c3e44;
-  --text-white: #ffffff;
-  --text-gray: #c0c0c0;
+  --background-body: #f0f0f0;
+  --background-card: #ffffff;
+  --text-white: #000000;
+  --text-gray: #6c6c6c;
   --text-orange: #ff9800;
   --text-green: #4caf50;
   --text-red: #f44336;
@@ -14,14 +17,12 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  /* background-color: #242424; */
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  /* height: 100%; */
 }
 * {
   margin: 0;
@@ -41,14 +42,14 @@ body {
   text-align: center;
 }
 
-@media (prefers-color-scheme: light) {
+@media (prefers-color-scheme: dark) {
   :root {
-    --background-body: #f0f0f0;
-    --background-card: #ffffff;
-    --text-white: #000000;
-    --text-gray: #6c6c6c;
+    --background-body: #24282f;
+    --background-card: #3c3e44;
+    --text-white: #ffffff;
+    --text-gray: #c0c0c0;
     --text-orange: #ff9800;
     --text-green: #4caf50;
     --text-red: #f44336;
   }
-}
+} */

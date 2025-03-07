@@ -1,38 +1,20 @@
-<template>
-  <div class="container">
-    <h1>Rick and Morty</h1>
-    <FilterByStatus />
-    <FilterByName />
-    <ListCharacters />
-  </div>
-</template>
-
-<script>
+<script setup lang="ts">
 import FilterByName from "@/components/FilterByName.vue";
 import FilterByStatus from "@/components/FilterByStatus.vue";
 import ListCharacters from "@/components/ListCharacters.vue";
-export default {
-  name: "App",
-  components: {
-    ListCharacters,
-    FilterByStatus,
-    FilterByName,
-  },
-};
 </script>
 
-<style scoped>
-h1 {
-  text-align: center;
-  margin-bottom: 1rem;
-  color: var(--text-orange);
-  font-size: 3rem;
-  font-weight: 700;
-}
+<template>
+  <div class="w-full h-full min-h-dvh bg-gray-100 dark:bg-gray-800">
+    <div class="max-w-10/12 mx-auto pt-11 pb-12 sm:px-6 lg:px-8">
+      <p class="p-4 pb-6 text-center text-5xl font-bold text-orange-400">
+        Rick and Morty
+      </p>
+      <FilterByStatus />
+      <FilterByName />
+      <ListCharacters />
+    </div>
+  </div>
+</template>
 
-.container {
-  width: 980px;
-  max-width: 90%;
-  margin: 1rem auto;
-}
-</style>
+<style scoped></style>

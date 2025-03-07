@@ -1,36 +1,88 @@
+<script setup lang="ts">
+/**
+ * CardCharacter.vue
+ *
+ * Component for displaying a character card with image and details.
+ *
+ * @prop {Character} character - The character data to display.
+ */
+
+interface Origin {
+  name: string;
+  url: string;
+}
+
+interface Location {
+  name: string;
+  url: string;
+}
+
+interface Character {
+  id: number;
+  name: string;
+  status: string;
+  species: string;
+  type: string;
+  gender: string;
+  origin: Origin;
+  location: Location;
+  image: string;
+  episode: string[];
+  url: string;
+  created: string;
+}
+
+defineProps<{ character: Character }>();
+</script>
+
 <template>
   <!-- Character card container -->
-  <div class="character">
+  <div
+    class="h-full border-none rounded-2xl overflow-hidden cursor-pointer transition-transform ease-in-out delay-50 hover:scale-105 bg-white dark:bg-gray-700 dark:text-white group"
+  >
     <!-- Character image -->
     <img
       :src="character.image"
       :alt="character.name"
-      class="character__image"
+      id="character__image"
+      class="w-full"
+      loading="lazy"
     />
     <!-- Character information section -->
-    <div class="character__info">
-      <h3>{{ character.name }}</h3>
+    <div id="character__info" class="p-4 flex flex-col text-center mb-2">
+      <span class="mb-4 text-lg font-semibold group-hover:text-orange-400">{{
+        character.name
+      }}</span>
       <!-- Status indicator with dynamic classes -->
-      <div class="status">
+      <div id="status" class="flex justify-start items-center mb-2">
         <span
+          class="w-3 h-3 rounded-full mr-2"
           :class="
             character.status === 'Alive'
-              ? 'status__alive'
+              ? 'bg-green-600'
               : character.status === 'Dead'
-              ? 'status__dead'
-              : 'status__unknown'
+                ? 'bg-red-600'
+                : 'bg-black dark:bg-white'
           "
         >
         </span>
-        <span>{{ character.status }} - {{ character.species }} </span>
+        <span class="text-gray-500 dark:text-gray-400"
+          >{{ character.status }} - {{ character.species }}
+        </span>
       </div>
       <!-- Origin information -->
-      <div class="origin">
+      <div
+        id="origin"
+        class="group-hover:text-gray-500 dark:group-hover:text-gray-400 mb-2 text-left"
+      >
         <span>Origin: </span>
         <span>{{ character.origin.name }}</span>
       </div>
       <!-- Location information -->
-      <div class="location">
+      <div
+        id="location"
+        class="group-hover:text-gray-500 dark:group-hover:text-gray-400 mb-2 text-left"
+      >
         <span>Location: </span>
         <span>{{ character.location.name }}</span>
       </div>
@@ -38,79 +90,4 @@
   </div>
 </template>
 
-<script>
-export default {
-  props: ["character"],
-};
-</script>
-
-<style scoped>
-.character {
-  background-color: var(--background-card);
-  border-radius: 20px;
-  box-shadow: 0 0 10px 1px var(--background-body);
-  overflow: hidden;
-  cursor: pointer;
-  transition: transform 200ms ease-in-out;
-  height: 100%;
-}
-
-.character:hover {
-  transform: scale(1.05);
-}
-
-.character:hover h3 {
-  color: var(--text-orange);
-}
-
-.character:hover span {
-  color: var(--text-gray);
-}
-
-.character h3 {
-  margin-bottom: 0.5rem;
-}
-
-.character__image {
-  width: 100%;
-}
-
-.character__info {
-  padding: 1rem;
-}
-
-.character__info .status {
-  display: flex;
-  align-items: center;
-  margin-bottom: 0.5rem;
-}
-
-.character__info .status span {
-  color: var(--text-gray);
-}
-
-.character__info .status span:first-child {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  margin-right: 0.5rem;
-}
-
-.character__info .status .status__alive {
-  background-color: var(--text-green);
-}
-
-.character__info .status .status__dead {
-  background-color: var(--text-red);
-}
-
-.character__info .status .status__unknown {
-  background-color: var(--text-white);
-}
-
-.origin,
-.location {
-  margin-bottom: 0.5rem;
-  text-align: left;
-}
-</style>
+<style scoped></style>

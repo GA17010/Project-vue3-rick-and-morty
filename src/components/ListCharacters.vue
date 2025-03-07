@@ -1,21 +1,68 @@
+<script setup lang="ts">
+/**
+ * ListCharacters.vue
+ *
+ * Component for displaying a list of characters with pagination.
+ *
+ * @component CardCharacter - Component to display individual character details.
+ * @component Pagination - Component for navigating pages.
+ *
+ * @emits {page-changed} Fired when the user changes the page.
+ */
+
+import CardCharacter from "@/components/CardCharacter.vue";
+import Pagination from "@/components/FooterPagination.vue";
+import { useCharactersStore } from "@/stores/CharactersStore";
+import { storeToRefs } from "pinia";
+import { onMounted, ref } from "vue";
+
+const characterStore = useCharactersStore();
+const { charactersFilter, filterState, totalPages } = storeToRefs(characterStore);
+const { getCharacters } = characterStore;
+const currentPage = ref(1);
+
+/**
+ * Handles the page change event.
+ *
+ * @param {number} page - The page number to navigate to.
+ */
+const handlePageChange = (page: number) => {
+  filterState.value = "";
+  currentPage.value = page;
+  getCharacters(page);
+};
+
+onMounted(() => {
+  getCharacters(currentPage.value);
+});
+</script>
+
 <template>
   <section>
-    <!-- Characters Section -->
-    <div class="characters" v-if="charactersFilter.length">
+    <!-- Characters List -->
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 my-12 characters"
+      v-if="charactersFilter.length"
+    >
       <div
-        class="characters__item"
         v-for="character in charactersFilter"
         :key="character.id"
+        class="max-w-[280px] min-w-[240px] mx-auto characters__item"
       >
-        <!-- Card Character Component -->
         <CardCharacter :character="character" />
       </div>
     </div>
-    <!-- Loading -->
-    <div v-else class="characters__loading">
-      <p>Loading...</p>
+
+    <!-- Loading State -->
+    <div
+      v-else
+      id="characters__loading"
+      class="flex justify-center items-center h-28"
+    >
+      <p class="font-bold text-2xl">Loading...</p>
     </div>
   </section>
+
   <!-- Pagination Component -->
   <Pagination
     :totalPage="totalPages"
@@ -24,62 +71,4 @@
   />
 </template>
 
-<script>
-import CardCharacter from "@components/CardCharacter.vue";
-import Pagination from "@components/Pagination.vue";
-import { useCharactersStore } from "@pinia/CharactersStore";
-import { storeToRefs } from "pinia";
-import { onMounted, ref } from "vue";
-export default {
-  components: {
-    CardCharacter,
-    Pagination,
-  },
-  setup() {
-    const characterStore = useCharactersStore();
-    const { charactersFilter, filterState, totalPages } =
-      storeToRefs(characterStore);
-    const { getCharacters } = characterStore;
-    const currentPage = ref(1);
-
-    // Handle page change
-    const handlePageChange = (page) => {
-      filterState.value = "";
-      currentPage.value = page;
-      getCharacters(page);
-    };
-
-    onMounted(() => {
-      getCharacters(currentPage.value);
-    });
-
-    return {
-      charactersFilter,
-      totalPages,
-      currentPage,
-      handlePageChange,
-    };
-  },
-};
-</script>
-
-<style scoped>
-.characters {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 2rem;
-  margin: 3rem 0;
-}
-
-.characters__loading {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100px;
-}
-
-.characters__loading p {
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-</style>
+<style scoped></style>
